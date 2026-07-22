@@ -1,0 +1,279 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light">
+<title>BNI想定問答カンペ｜KM AIサポート</title>
+<style>
+  html, :root { color-scheme: light; }
+  :root {
+    --paper: #F4F6F9;
+    --card: #FFFFFF;
+    --ink: #1C2A45;
+    --ink-soft: #3B424D;
+    --ink-faint: #7C8699;
+    --accent: #2B54A4;
+    --accent-ink: #1E407D;
+    --accent-wash: #EDF3FB;
+    --line: #D9DFE8;
+    --line-soft: #E7EBF1;
+    --good: #1F8A5B;
+    --good-wash: #E8F5EE;
+    --warn: #C2410C;
+    --warn-wash: #FFF3EC;
+  }
+  * { box-sizing: border-box; margin: 0; }
+  body {
+    background: var(--paper); color: var(--ink);
+    font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN",
+                 "Hiragino Sans", "Yu Gothic", Meiryo, sans-serif;
+    line-height: 1.75; -webkit-font-smoothing: antialiased; font-feature-settings: "palt" 1;
+  }
+  .wrap { max-width: 720px; margin: 0 auto; padding: 0 0 60px; }
+
+  /* header */
+  .head {
+    background: var(--accent-ink); color: #fff;
+    padding: 26px 24px 24px; position: sticky; top: 0; z-index: 20;
+  }
+  .head .brand { font-size: 12px; font-weight: 700; letter-spacing: .1em; opacity: .75; }
+  .head h1 { font-size: 21px; font-weight: 800; margin-top: 4px; letter-spacing: .01em; }
+  .head .note { font-size: 12px; opacity: .8; margin-top: 6px; }
+
+  /* 3原則 */
+  .rules { background: var(--card); margin: 14px 14px 0; border-radius: 14px; padding: 18px 20px; border: 1px solid var(--line); }
+  .rules h2 { font-size: 13px; font-weight: 800; letter-spacing: .08em; color: var(--accent); }
+  .rules ol { margin: 10px 0 0; padding-left: 20px; display: grid; gap: 7px; }
+  .rules li { font-size: 14px; }
+  .rules li b { color: var(--ink); }
+
+  /* section label */
+  .sec { margin: 26px 14px 10px; display: flex; align-items: center; gap: 10px; }
+  .sec .t { font-size: 13px; font-weight: 800; letter-spacing: .1em; color: var(--ink-faint); }
+  .sec::after { content: ""; flex: 1; height: 1px; background: var(--line); }
+
+  /* QA card */
+  .qa {
+    background: var(--card); margin: 0 14px 12px; border-radius: 14px;
+    border: 1px solid var(--line); overflow: hidden;
+  }
+  .qa.hot { border-color: var(--accent); border-width: 1.5px; }
+  .q {
+    display: flex; gap: 10px; align-items: baseline;
+    padding: 14px 18px; background: var(--accent-wash);
+    font-size: 15.5px; font-weight: 800; letter-spacing: .01em;
+  }
+  .q .mark { color: var(--accent); font-size: 14px; flex-shrink: 0; }
+  .a { padding: 16px 18px 18px; }
+  .a .say {
+    font-size: 15px; color: var(--ink);
+    border-left: 3px solid var(--accent); padding-left: 14px;
+  }
+  .a .say b { background: linear-gradient(transparent 60%, #FDE9A9 60%); font-weight: 800; }
+  .tip {
+    margin-top: 12px; font-size: 12.5px; color: var(--ink-soft);
+    background: var(--good-wash); border-radius: 9px; padding: 10px 12px;
+  }
+  .tip b { color: var(--good); }
+
+  /* mini table */
+  .mini { padding: 4px 18px 18px; display: grid; gap: 9px; }
+  .mini .r { border-top: 1px solid var(--line-soft); padding-top: 9px; }
+  .mini .r:first-child { border-top: 0; padding-top: 0; }
+  .mini .k { font-size: 13.5px; font-weight: 800; }
+  .mini .v { font-size: 13.5px; color: var(--ink-soft); margin-top: 2px; }
+
+  /* escape lines */
+  .esc { background: var(--card); margin: 0 14px; border-radius: 14px; border: 1px solid var(--line); padding: 18px 20px; }
+  .esc h3 { font-size: 14px; font-weight: 800; }
+  .esc ol { margin: 10px 0 0; padding-left: 20px; display: grid; gap: 9px; }
+  .esc li { font-size: 14.5px; font-weight: 700; }
+  .esc li span { display: block; font-size: 12px; font-weight: 400; color: var(--ink-faint); }
+
+  /* 30sec */
+  .pitch { background: var(--accent-ink); color: #fff; margin: 26px 14px 0; border-radius: 14px; padding: 20px 22px; }
+  .pitch h3 { font-size: 13px; font-weight: 800; letter-spacing: .08em; opacity: .8; }
+  .pitch p { font-size: 14.5px; margin-top: 10px; line-height: 1.85; }
+  .pitch p b { background: rgba(255,255,255,.18); padding: 0 4px; border-radius: 3px; }
+
+  /* dont */
+  .dont { background: var(--warn-wash); margin: 14px 14px 0; border-radius: 14px; padding: 16px 20px; }
+  .dont h3 { font-size: 13px; font-weight: 800; color: var(--warn); }
+  .dont ul { margin: 8px 0 0; padding-left: 18px; display: grid; gap: 5px; }
+  .dont li { font-size: 13.5px; color: var(--ink-soft); }
+
+  .foot { text-align: center; font-size: 11.5px; color: var(--ink-faint); margin-top: 26px; }
+
+  @media (max-width: 560px) {
+    .head { padding: 20px 18px 18px; }
+    .head h1 { font-size: 19px; }
+    .q { font-size: 15px; padding: 13px 15px; }
+    .a { padding: 14px 15px 16px; }
+    .rules, .esc { margin-left: 12px; margin-right: 12px; padding: 16px 17px; }
+    .qa, .sec, .pitch, .dont { margin-left: 12px; margin-right: 12px; }
+  }
+</style>
+</head>
+<body>
+
+
+<div class="wrap">
+
+  <div class="head">
+    <div class="brand">KM AIサポート ／ 木戸</div>
+    <h1>BNI定例会 想定問答カンペ</h1>
+    <div class="note">Zoom中にチラ見用 ／ 迷ったら下の「万能フレーズ」へ</div>
+  </div>
+
+  <div class="rules">
+    <h2>答え方の3原則</h2>
+    <ol>
+      <li><b>盛らない。</b>「実績はこれから」と言い切る方が信用される</li>
+      <li><b>短く答えて、具体例を1つ。</b>長いほど自信なく見える</li>
+      <li><b>最後は「紹介してほしい人」に戻す。</b>Q&Aは営業でなく紹介先を伝える場</li>
+    </ol>
+  </div>
+
+  <div class="sec"><span class="t">最重要 3問</span></div>
+
+  <div class="qa hot">
+    <div class="q"><span class="mark">Q1</span><span>実績・事例は？</span></div>
+    <div class="a">
+      <div class="say">
+        <b>正直に言うと、法人のお客様はこれからです。</b>今は知人の会社や個人の方で、メールや資料作りをAIで半分の時間にするお手伝いをしてきました。実際に使ってもらうツールも作っています。<br><br>
+        <b>だからこそ、最初のお客様には特に丁寧にやります。</b>まず30分の無料診断で「御社だと月何時間・いくら浮くか」を数字でお見せしますので、そこで判断していただければ。<br><br>
+        <b>今日ここに来たのも、その最初の一社を一緒に作ってくださる方を探しに来たからです。</b>
+      </div>
+      <div class="tip"><b>POINT</b> ごまかすと必ず見抜かれる。「これから」と言い切って、<b>無料診断＝相手のリスクゼロ</b>に話を移すのが最強。最後の一文はBNIに刺さる。</div>
+    </div>
+  </div>
+
+  <div class="qa hot">
+    <div class="q"><span class="mark">Q2</span><span>他のAI業者との違いは？</span></div>
+    <div class="a">
+      <div class="say">
+        大きなAI会社さんは<b>数百万円のシステム開発が中心</b>で、正直、中小企業には規模が合わないことが多いです。<br><br>
+        私は逆で、<b>「今ある作業をAIでどう減らすか」だけに絞っています。</b>新しいシステムを入れるのではなく、<b>社長や社員さんが自分で使えるようになるまで隣で教える。</b><br><br>
+        ツールを渡して終わりではなく、<b>使えるようになるまで伴走する</b>——そこが一番の違いです。
+      </div>
+      <div class="tip"><b>3つの軸だけ覚える</b> ①大手より小回り・手が届く価格 ②開発でなく“使い方”を教える ③渡して終わりでなく定着まで伴走</div>
+    </div>
+  </div>
+
+  <div class="qa hot">
+    <div class="q"><span class="mark">Q3</span><span>AIの専門的な質問（セキュリティ等）</span></div>
+    <div class="mini">
+      <div class="r">
+        <div class="k">情報漏洩は大丈夫？</div>
+        <div class="v">「大事なポイントです。まず<b>“入れていい情報・ダメな情報”の線引き</b>から一緒に決めます。無料版だと入力が学習に使われる場合があるので、業務では<b>学習させない設定や有料版を使う</b>というルール作りから入ります」</div>
+      </div>
+      <div class="r">
+        <div class="k">AIって間違えない？</div>
+        <div class="v">「<b>間違えます。</b>だから最初は<b>“AIに下書きさせて、人が確認する”</b>使い方から入ります。ゼロにするのではなく、<b>かかる時間を半分にする</b>のが目的です」</div>
+      </div>
+      <div class="r">
+        <div class="k">どのAIを使うの？</div>
+        <div class="v">「ChatGPTが中心です。やりたいことに合わせて使い分けます」</div>
+      </div>
+    </div>
+    <div class="a" style="padding-top:0">
+      <div class="tip"><b>分からない質問が来たら</b>「すみません、そこは今すぐ正確にお答えできないので、<b>調べて必ずお返事します</b>」→ 知ったかぶりが一番の失点。後日ちゃんと返す方が信頼される。</div>
+    </div>
+  </div>
+
+  <div class="sec"><span class="t">BNIで必ず来る</span></div>
+
+  <div class="qa">
+    <div class="q"><span class="mark">Q</span><span>どんな人を紹介すればいい？ ← 本丸</span></div>
+    <div class="a">
+      <div class="say">
+        <b>「AIは気になってるけど、何から始めればいいか分からない」社長さん</b>です。<br>
+        特に、<b>メール・議事録・見積書や資料作りに毎日時間を取られている</b>方。<b>従業員数名〜数十名の会社</b>がちょうどいいです。<br><br>
+        <b>まず30分の無料診断だけでも受けてもらえれば</b>、その場で「どこがラクになるか」をお見せします。<b>紹介のハードルは低いです。</b>
+      </div>
+      <div class="tip"><b>POINT</b> 「紹介しやすさ」を強調。<b>無料＝紹介する側もリスクなし</b>と必ず伝える。</div>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="q"><span class="mark">Q</span><span>今は他にお仕事は？</span></div>
+    <div class="a">
+      <div class="say"><b>AIサポート一本でやっています。</b>これを本業にすると決めて動いています。</div>
+      <div class="tip"><b>POINT</b> 専業は強力な信頼材料。堂々と、短く。</div>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="q"><span class="mark">Q</span><span>入会は考えてますか？</span></div>
+    <div class="a">
+      <div class="say"><b>前向きに検討しています。</b>今日は雰囲気を知りたくて参加させていただきました。</div>
+      <div class="tip"><b>POINT</b> 正直に「前向き」と言うと、メンバーの接し方が一気に協力的になる。</div>
+    </div>
+  </div>
+
+  <div class="sec"><span class="t">短答集</span></div>
+
+  <div class="qa">
+    <div class="mini" style="padding-top:16px">
+      <div class="r">
+        <div class="k">料金は？</div>
+        <div class="v">無料診断は0円。研修が5万円〜、仕組み作りが10万円〜、月額サポートが月5万円〜です。<b>（即答できると信頼が上がる）</b></div>
+      </div>
+      <div class="r">
+        <div class="k">その値段の根拠は？</div>
+        <div class="v">浮いた時間 × 社長の時給で計算すると、月10時間浮けば5〜10万円分。投資として合う範囲に設定しています。</div>
+      </div>
+      <div class="r">
+        <div class="k">対応エリアは？</div>
+        <div class="v">オンラインなので全国対応できます。近隣なら対面も可能です。</div>
+      </div>
+      <div class="r">
+        <div class="k">なぜAIの仕事を？</div>
+        <div class="v">知人にAIの使い方を教えたら「人生変わった」と言われて。この便利さを、忙しい社長にこそ届けたいと思ったからです。</div>
+      </div>
+      <div class="r">
+        <div class="k">PCが苦手でも？</div>
+        <div class="v">大丈夫です。スマホだけで始められる方法からご案内します。</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sec"><span class="t">詰まったとき</span></div>
+
+  <div class="esc">
+    <h3>万能フレーズ 3つ</h3>
+    <ol>
+      <li>いい質問ありがとうございます。<span>3秒稼げる＋印象が良い</span></li>
+      <li>そこは調べて必ずお返事します。<span>分からない時はこれ一択</span></li>
+      <li>まず30分の無料診断で、御社の数字をお見せします。<span>何を聞かれても最後はここに戻せる</span></li>
+    </ol>
+  </div>
+
+  <div class="pitch">
+    <h3>30秒プレゼン（最終版）</h3>
+    <p>
+      みなさんこんにちは、<b>KM AIサポートの木戸</b>です。<br>
+      私は、<b>社長さんの“面倒な手作業”をAIで時短する</b>お手伝いをしています。メール・議事録・資料作りを、ChatGPTを使って<b>半分の時間</b>にします。<br>
+      まずは<b>30分の無料AI診断</b>で、「御社のどこがAIでラクになるか」をその場でお見せします。<br>
+      今日ご紹介いただきたいのは、<b>「AIは気になるけど、何から始めればいいか分からない」社長さん</b>です。<br>
+      AIのことは、ぜひ<b>木戸</b>に丸投げしてください。よろしくお願いします！
+    </p>
+  </div>
+
+  <div class="dont">
+    <h3>やらないこと</h3>
+    <ul>
+      <li>実績を盛る・あいまいにごまかす</li>
+      <li>専門用語（LLM・RAG等）を使う → 「時短・自動化・ラクになる」で話す</li>
+      <li>長々と話す（1問30秒以内で切る）</li>
+      <li>知らないことを知ったかぶりで答える</li>
+    </ul>
+  </div>
+
+  <div class="foot">KM AIサポート ／ 木戸 — 定例会 2026.07.24</div>
+
+</div>
+
+</body>
+</html>
